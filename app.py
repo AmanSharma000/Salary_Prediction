@@ -61,6 +61,13 @@ st.markdown("""
     div[data-baseweb="select"] > div * {
         cursor: pointer !important;
     }
+    /* Hide anchor links */
+    .stApp a.anchor-link {
+        display: none;
+    }
+    h1 a, h2 a, h3 a {
+        display: none !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
