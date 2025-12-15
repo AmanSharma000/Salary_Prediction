@@ -12,8 +12,18 @@ st.set_page_config(
 # Custom CSS
 st.markdown("""
     <style>
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
     .main {
-        background-color: #f8f9fa;
+        background: rgba(255, 255, 255, 0.85);
+        padding: 20px;
+        border-radius: 15px;
+        margin: 20px;
     }
     .stButton>button {
         width: 100%;
@@ -48,6 +58,11 @@ st.markdown("""
     h1, h2, h3 {
         color: #2d3436;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    /* Make input labels more visible */
+    .stNumberInput label, .stSelectbox label, .stSlider label {
+        font-weight: 600;
+        color: #2d3436;
     }
     </style>
     """, unsafe_allow_html=True)
