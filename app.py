@@ -54,6 +54,13 @@ st.markdown("""
         font-weight: 600;
         color: #2d3436;
     }
+    /* Fix cursor for dropdowns */
+    div[data-baseweb="select"] > div {
+        cursor: pointer !important;
+    }
+    div[data-baseweb="select"] > div * {
+        cursor: pointer !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
