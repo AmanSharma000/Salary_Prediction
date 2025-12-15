@@ -5,7 +5,7 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-App-red)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-## 📌 Project Overview
+## 📌 Project Overview (https://salary-prediction0.streamlit.app/)
 
 This project implements a **production-ready salary prediction system** using **scikit-learn Pipelines** and **ColumnTransformer**. The core philosophy is to lock the entire preprocessing and model logic together, ensuring **consistent, safe, and deployable predictions**.
 
