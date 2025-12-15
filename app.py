@@ -12,18 +12,8 @@ st.set_page_config(
 # Custom CSS
 st.markdown("""
     <style>
-    .stApp {
-        background-image: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
     .main {
-        background: rgba(255, 255, 255, 0.85);
-        padding: 20px;
-        border-radius: 15px;
-        margin: 20px;
+        background-color: #f8f9fa;
     }
     .stButton>button {
         width: 100%;
