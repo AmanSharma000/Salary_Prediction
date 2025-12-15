@@ -6,37 +6,48 @@ import pickle
 st.set_page_config(
     page_title="Salary Prediction Pro",
     page_icon="💼",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    layout="wide"
 )
 
 # Custom CSS
 st.markdown("""
     <style>
     .main {
-        background-color: #f5f7f9;
+        background-color: #f8f9fa;
     }
     .stButton>button {
         width: 100%;
-        background-color: #4CAF50;
+        background-color: #2e86de;
         color: white;
         font-weight: bold;
-        border-radius: 10px;
-        height: 50px;
+        border-radius: 8px;
+        height: 48px;
+        font-size: 16px;
+        border: none;
+        transition: all 0.3s ease;
     }
     .stButton>button:hover {
-        background-color: #45a049;
+        background-color: #0984e3;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    .metric-card {
+    .input-card {
         background-color: white;
         padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        text-align: center;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
     }
-    h1 {
-        color: #2c3e50;
-        font-family: 'Helvetica Neue', sans-serif;
+    .metric-container {
+        background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        padding: 30px;
+        border-radius: 15px;
+        color: white;
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(108, 92, 231, 0.2);
+    }
+    h1, h2, h3 {
+        color: #2d3436;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -54,39 +65,55 @@ except FileNotFoundError:
     st.error("⚠️ Model file 'MLR_USING_PIPE.pkl' not found. Please ensure it is in the same directory.")
     st.stop()
 
-# Sidebar Inputs
-with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=100)
-    st.title("Employee Profile")
-    st.markdown("---")
-    
-    st.subheader("Personal Details")
-    age = st.slider("Age", 18, 65, 30)
-    education = st.selectbox("Education Level", ['Bachelor', 'Master', 'PhD'])
-    location = st.selectbox("Location", ['Rural', 'Suburban', 'Urban'])
-    
-    st.subheader("Professional Details")
-    job_type = st.selectbox("Job Role", ['HR', 'Sales', 'Marketing', 'Engineering', 'DataScience', 'Management'])
-    years_experience = st.number_input("Years of Experience", 0.0, 50.0, 5.0, 0.5)
-    company_size = st.select_slider("Company Size", options=['Small', 'Medium', 'Large'])
-    
-    st.subheader("Performance Metrics")
-    performance_rating = st.slider("Performance Rating (1-5)", 1, 5, 3)
-    projects_completed = st.number_input("Projects Completed", 0, 100, 10)
-    certifications = st.number_input("Certifications", 0, 20, 1)
-    promoted = st.radio("Recently Promoted?", ['No', 'Yes'], horizontal=True)
-    
-    st.markdown("---")
-    predict_btn = st.button("Predict Salary 🚀")
+# Header
+st.markdown("<h1 style='text-align: center; margin-bottom: 30px;'>💼 Salary Prediction System</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #636e72; font-size: 18px; margin-bottom: 40px;'>Enter employee details below to estimate annual compensation.</p>", unsafe_allow_html=True)
 
-# Main Content
-st.title("💼 Salary Prediction System")
-st.markdown("### Industry-Grade Machine Learning Pipeline")
-st.markdown("Enter the employee details in the sidebar to generate a salary estimate based on our advanced ML model.")
+# Main Form
+with st.form("prediction_form"):
+    # Section 1: Personal & Education
+    st.markdown("### 👤 Personal & Education")
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        age = st.number_input("Age", 18, 65, 30)
+    with c2:
+        education = st.selectbox("Education Level", ['Bachelor', 'Master', 'PhD'])
+    with c3:
+        location = st.selectbox("Location", ['Rural', 'Suburban', 'Urban'])
+    
+    st.markdown("---")
+    
+    # Section 2: Professional Experience
+    st.markdown("### 🏢 Professional Experience")
+    c4, c5, c6 = st.columns(3)
+    with c4:
+        job_type = st.selectbox("Job Role", ['HR', 'Sales', 'Marketing', 'Engineering', 'DataScience', 'Management'])
+    with c5:
+        years_experience = st.number_input("Years of Experience", 0.0, 50.0, 5.0, 0.5)
+    with c6:
+        company_size = st.select_slider("Company Size", options=['Small', 'Medium', 'Large'])
+
+    st.markdown("---")
+
+    # Section 3: Performance & Achievements
+    st.markdown("### 📈 Performance & Metrics")
+    c7, c8, c9, c10 = st.columns(4)
+    with c7:
+        performance_rating = st.slider("Performance (1-5)", 1, 5, 3)
+    with c8:
+        projects_completed = st.number_input("Projects Done", 0, 100, 10)
+    with c9:
+        certifications = st.number_input("Certifications", 0, 20, 1)
+    with c10:
+        promoted = st.selectbox("Recently Promoted?", ['No', 'Yes'])
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Submit Button
+    submitted = st.form_submit_button("Generate Prediction 🚀")
 
 # Prediction Logic
-if predict_btn:
-    # Create DataFrame
+if submitted:
     input_data = pd.DataFrame({
         'YearsExperience': [years_experience],
         'Age': [age],
@@ -104,25 +131,17 @@ if predict_btn:
         prediction = model.predict(input_data)[0]
         
         st.markdown("---")
-        col1, col2, col3 = st.columns([1, 2, 1])
         
-        with col2:
+        # Result Display
+        col_spacer_l, col_res, col_spacer_r = st.columns([1, 2, 1])
+        with col_res:
             st.markdown(f"""
-                <div class="metric-card">
-                    <h3 style="margin-bottom: 0px; color: #7f8c8d;">Estimated Annual Salary</h3>
-                    <h1 style="color: #27ae60; font-size: 48px; margin-top: 10px;">${prediction:,.2f}</h1>
-                    <p style="color: #95a5a6;">Based on current market trends</p>
+                <div class="metric-container">
+                    <h3 style="color: rgba(255,255,255,0.9); margin: 0;">Estimated Annual Salary</h3>
+                    <h1 style="color: white; font-size: 56px; margin: 10px 0;">${prediction:,.2f}</h1>
+                    <p style="color: rgba(255,255,255,0.8); margin: 0;">Based on {years_experience} years of experience in {job_type}</p>
                 </div>
             """, unsafe_allow_html=True)
             
-        st.success("✅ Prediction generated successfully!")
-        
-        # Optional: Feature breakdown (visual flair)
-        with st.expander("See Input Summary"):
-            st.json(input_data.to_dict(orient='records')[0])
-            
     except Exception as e:
         st.error(f"An error occurred: {e}")
-
-else:
-    st.info("👈 Please configure the employee profile in the sidebar and click 'Predict Salary'.")
