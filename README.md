@@ -64,14 +64,14 @@ The project uses a robust pipeline architecture:
 
 ```mermaid
 graph TD
-    A[Raw Data (DataFrame)] --> B[ColumnTransformer]
+    A["Raw Data (DataFrame)"] --> B[ColumnTransformer]
     B --> C{Preprocessing}
     C -->|Categorical| D[OrdinalEncoder]
     C -->|Numerical| E[StandardScaler]
     D --> F[Transformed Features]
     E --> F
-    F --> G[Linear Regression Model]
-    G --> H[Salary Prediction]
+    F --> G["Linear Regression Model"]
+    G --> H["Salary Prediction"]
 ```
 
 *   **One ColumnTransformer**: Handles all feature engineering.
