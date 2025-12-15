@@ -156,8 +156,8 @@ if submitted:
         with col_res:
             st.markdown(f"""
                 <div class="metric-container">
-                    <h3 style="color: rgba(255,255,255,0.9); margin: 0;">Estimated Annual Salary</h3>
-                    <h1 style="color: white; font-size: 56px; margin: 10px 0;">${prediction:,.2f}</h1>
+                    <h3 style="color: rgba(255,255,255,0.9); margin: 0;">Estimated Monthly Salary</h3>
+                    <h1 style="color: white; font-size: 56px; margin: 10px 0;">₹{prediction:,.2f}</h1>
                     <p style="color: rgba(255,255,255,0.8); margin: 0;">Based on {years_experience} years of experience in {job_type}</p>
                 </div>
             """, unsafe_allow_html=True)
